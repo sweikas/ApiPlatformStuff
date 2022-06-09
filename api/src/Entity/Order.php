@@ -13,8 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 #[ApiResource(
-    normalizationContext: ['groups' => ['order:read']],
-    denormalizationContext: ['groups' => ['order:write']],
+    collectionOperations: [
+        'get',
+        'post'
+    ],
     itemOperations: [
         'get',
         'put' => [
@@ -22,10 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         'delete'
     ],
-    collectionOperations: [
-        'get',
-        'post'
-    ]
+    denormalizationContext: ['groups' => ['order:write']],
+    normalizationContext: ['groups' => ['order:read']]
 )]
 #[ORM\HasLifecycleCallbacks]
 class Order

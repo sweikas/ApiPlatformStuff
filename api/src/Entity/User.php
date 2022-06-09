@@ -18,8 +18,10 @@ use App\Controller\GetAllOrders;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
-    normalizationContext: ['groups' => ['user:read']],
-    denormalizationContext: ['groups' => ['user:write']],
+    collectionOperations: [
+        'get',
+        'post'
+    ],
     itemOperations: [
         'get',
         'put',
@@ -30,10 +32,8 @@ use App\Controller\GetAllOrders;
             'controller' => GetAllOrders::class
         ]
     ],
-    collectionOperations: [
-        'get',
-        'post'
-    ]
+    denormalizationContext: ['groups' => ['user:write']],
+    normalizationContext: ['groups' => ['user:read']]
 )]
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

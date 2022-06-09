@@ -27,6 +27,7 @@ final class Version20220607190439 extends AbstractMigration
         $this->addSql('CREATE TABLE "user" (id INT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, sex VARCHAR(20) NOT NULL, date_created TIMESTAMP(0) WITHOUT TIME ZONE, date_updated TIMESTAMP(0) WITHOUT TIME ZONE, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('ALTER TABLE "order" ADD CONSTRAINT FK_F52993989D86650F FOREIGN KEY (user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('INSERT INTO "user" (id, email, roles, password, name, sex, date_created, date_updated) VALUES (:id, :email, :roles, :password, :name, :sex, :date_created, :date_updated)', ['id' => 1, 'email' => 'test@test.com', 'roles' => json_encode ((object) null), 'password' => '$2y$13$RU/vooAOT6tnupxMrYiPa.Yn/51/ZSuw8NX5frsHMszFq2TYPrMCa', 'name' =>'test', 'sex' => 'male', 'date_created' => '2000-01-01 00:00:00', 'date_updated' => '2000-01-01 00:00:00']);
     }
 
     public function down(Schema $schema): void
